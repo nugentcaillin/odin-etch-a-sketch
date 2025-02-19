@@ -1,3 +1,5 @@
+const INITIAL_SIZE = 16;
+
 
 function initializeSquareSketchboard(rowCellCount) {
 
@@ -14,4 +16,20 @@ function initializeSquareSketchboard(rowCellCount) {
 	}
 }
 
-initializeSquareSketchboard(10);
+function setUpEventHandlers() {
+	
+	const sketchboard = document.querySelector("#sketchboard");
+	sketchboard.addEventListener("mouseover", e => {
+		let target = e.target;
+		if (target.id !== "sketchboard") {
+			colourSquare(target);
+		}
+	})
+}
+
+function colourSquare(square) {
+	square.style["background-color"] = "darkblue";
+}
+
+initializeSquareSketchboard(16);
+setUpEventHandlers();
