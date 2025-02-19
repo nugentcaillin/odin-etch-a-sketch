@@ -1,6 +1,7 @@
 
 const INITIAL_SIZE = 16;
 const MAX_SIZE = 100;
+const OPACITY_INC = 0.1;
 
 
 main()
@@ -35,9 +36,19 @@ function initializeSquareSketchboard(rowCellCount) {
 		div.style["width"] = sideLength;
 		div.style["height"] = sideLength;
 		div.style["flex-grow"] = 1;
+		div.style["opacity"] = 0;
 		sketchboard.appendChild(div);
 	}
 }
+
+
+// returns random integer from zero to max inclusive
+function randomIntUpTo(max) {
+	let val = Math.random();
+	// add 1 to account for floor
+	val *= (max + 1);
+	return Math.floor(val);
+} 
 
 function setUpEventHandlers() {
 	
@@ -66,7 +77,20 @@ function setUpEventHandlers() {
 	})
 }
 
+function getRandomColorString() {
+	const COLOR_BOUND = 255;
+	const red = randomIntUpTo(COLOR_BOUND);
+	const blue = randomIntUpTo(COLOR_BOUND);
+	const green = randomIntUpTo(COLOR_BOUND);
+
+	return `rgb(${red}, ${green}, ${blue})`;
+}
+
 function colourSquare(square) {
-	square.style["background-color"] = "darkblue";
+	square.style["background-color"] = getRandomColorString();
+	const opacity = +square.style["opacity"];
+	if (opacity < 1) {
+		square.style["opacity"] = Math.min(opacity + OPACITY_INC, 1);
+	}
 }
 
